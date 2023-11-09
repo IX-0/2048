@@ -1,0 +1,79 @@
+.container {
+    margin: 0% 25% 0% 25%;
+}
+
+.gameBoard {
+    background-color:rgb(181, 163, 144);
+    border-radius:10px;
+    border:10px rgb(181, 163, 144) solid;
+    margin: auto;
+}
+
+.gameBoard td {
+    width:100px;
+    height:100px;
+    background-color:rgb(204, 192, 179);
+    
+    padding:0px;
+    margin:0px;
+
+    border-radius:10px;
+    border:3px solid rgb(181, 163, 144)
+} 
+
+.block {
+    display: block;
+    border-radius:3px;
+    
+    width:90px;
+
+    font-size:40px;
+    font-weight: bold;
+    font-family:"Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    text-align: center;
+    color:rgb(101, 90, 75);
+
+    margin:auto;
+}
+
+.button {
+    border: solid 4px rgb(181, 163, 144);
+    border-radius: 10px;
+    width: 220px;
+    height: 40px;
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: rgb(204, 192, 179);
+    color: rgb(101 90 75);
+}
+
+.score {
+    font-family:"Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    color:rgb(101 90 75);
+    text-align:center;
+}
+
+.endGameScreen {
+    opacity:1;
+    backdrop-filter: blur(5px);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+}
+
+.message {
+    display: block;
+    border-radius: 10px;
+    width: 300px;
+    height: 200px;
+    border: solid 4px rgb(101 90 75);
+    margin:auto;
+    margin-bottom: 10px;
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    text-align: center;
+    color: rgb(101 90 75);
+    background-color: white;
+}
+
