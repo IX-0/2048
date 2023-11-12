@@ -126,34 +126,37 @@ function move(dir) {
 
             for (i=1;i<=4;i++){
                 for (j=1;j<=4;j++){
+                    
+                    if (blockAt(i,j).innerHTML = "") {
 
-                    var inc = 0
-                    while (i-inc > 0){
-                        if (i-inc-1 > 0 && blockAt(i-inc-1,j).innerHTML == "") {
-                            inc++
-                            continue
+                        var inc = 0
+                        while (i-inc > 0){
+                            if (i-inc-1 > 0 && blockAt(i-inc-1,j).innerHTML == "") {
+                                inc++
+                                continue
+                            }
+                            else if (i-inc-1 > 0 && blockAt(i-inc-1,j).innerHTML == blockAt(i,j).innerHTML){
+                                inc++
+                                break
+                            }
+                            else {
+                                break
+                            }
+    
                         }
-                        else if (i-inc-1 > 0 && blockAt(i-inc-1,j).innerHTML == blockAt(i,j).innerHTML){
-                            inc++
-                            break
-                        }
-                        else {
-                            break
-                        }
-
+    
+                        if (inc != 0) {
+    
+                            if (blockAt(i-inc,j).innerHTML == ""){
+                                moveBlock(i,j,i-inc,j)
+                            }
+                            else if (blockAt(i-inc,j).innerHTML == blockAt(i,j).innerHTML){
+                                newBlock(parseInt(blockAt(i,j).value)*2,i-inc,j)
+    
+                                delBlock(i,j)
+                            }
+                        }  
                     }
-
-                    if (inc != 0) {
-
-                        if (blockAt(i-inc,j).innerHTML == ""){
-                            moveBlock(i,j,i-inc,j)
-                        }
-                        else if (blockAt(i-inc,j).innerHTML == blockAt(i,j).innerHTML){
-                            newBlock(parseInt(blockAt(i,j).value)*2,i-inc,j)
-
-                            delBlock(i,j)
-                        }
-                    }  
                 }
             }
             break;
