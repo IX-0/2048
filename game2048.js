@@ -127,7 +127,7 @@ function move(dir) {
             for (i=1;i<=4;i++){
                 for (j=1;j<=4;j++){
                     
-                    if (blockAt(i,j).innerHTML = "") {
+                    if (blockAt(i,j).innerHTML != "") {
 
                         var inc = 0
                         while (i-inc > 0){
