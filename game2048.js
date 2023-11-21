@@ -1,6 +1,7 @@
 var highscore = 0
 var prevGameStates = []
 
+
 function convertCoords(x,y){
     return x.toString() + y.toString()
 }
@@ -278,8 +279,6 @@ function move(dir) {
     if (evalEnd(newState)) {
         document.getElementById("endGameScreen").style.display = "block"
     }
-
-    console.log(prevGameStates)
 }
 
 document.addEventListener('keydown', (event) => {
@@ -311,3 +310,42 @@ document.addEventListener('keydown', (event) => {
         }
     }
 }, false);
+
+document.addEventListener('touchstart', e => {
+
+    x1 = e.touches[0].screenX
+    y1 = e.touches[0].screenY
+
+}, false)
+
+document.addEventListener('touchend', e => {
+
+    x2 = e.changedTouches[0].screenX
+    y2 = e.changedTouches[0].screenY
+
+    dx = x2-x1
+    dy = y2-y1
+
+    if (dx == 0 && dy == 0) {
+        return
+    }
+
+    if (Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) {
+            move('l')
+        }
+        else {
+            move('r')
+        }
+    }
+    else {
+        if (dy < 0) {
+            move('u')
+        }
+        else {
+            move('d')
+        }
+    }
+
+    // e.touches.remove(0)
+}, false)
