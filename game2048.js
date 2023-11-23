@@ -312,7 +312,7 @@ document.addEventListener('keydown', (event) => {
 }, false);
 
 document.addEventListener('touchstart', e => {
-
+    e.preventDefault()
     x1 = e.touches[0].screenX
     y1 = e.touches[0].screenY
 
