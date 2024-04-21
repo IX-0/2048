@@ -1,25 +1,42 @@
-var highscore = 0
-var prevGameStates = []
+var highscore = 0;
+var prevGameStates = [];
 
+
+function randomIntFromInterval(min, max) { // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
 function convertCoords(x,y){
     return x.toString() + y.toString()
 }
 
 function newBlock(value=2,x=0,y=0) {
-    
+
     if (x == 0 && y == 0) {
-        var x = Math.floor(Math.random()*4 + 1) 
-        var y = Math.floor(Math.random()*4 + 1) 
         
-        if (blockAt(x,y).innerHTML == "") {
-            blockAt(x,y).innerHTML = '<p class="block">'+ value +'</p>'
-            blockAt(x,y).value = value
-            blockAt(x,y).style.backgroundColor = "rgb(238,228,218)"
-            return
+        let emptyBlocks = [];
+        for (let x = 1 ; x <= 4 ; x++) {
+            for (let y = 1 ; y<=4 ; y++) {
+                if (blockAt(x,y).value == 0) {
+                    emptyBlocks.push(convertCoords(x,y));
+                }
+            }
+        }
+
+        let i = randomIntFromInterval(0, emptyBlocks.length - 1); // Choose a random place that has an empty square
+        
+        let el = emptyBlocks[i]; // Convert string "xy" into x and y coordinates
+        let x = parseInt(el.charAt(0));
+        let y = parseInt(el.charAt(1));
+        
+        let c = randomIntFromInterval(1, 5); //Effectivly a new square has a 1 in 4 chance of having 4 as its value
+        if (c < 4  || emptyBlocks.length == 16) { //If game starts (everything is empty) it spawns a 2
+            newBlock(2, x, y);
+        } else { 
+            newBlock(4, x, y); 
         }
         
-        newBlock()
+        
     }
 
     else {
@@ -27,7 +44,8 @@ function newBlock(value=2,x=0,y=0) {
         blockAt(x,y).value = value
 
         switch (value) {
-            case 2: blockAt(x,y).style.backgroundColor = "rgb(238,228,218)"; 
+            case 2:
+                blockAt(x,y).style.backgroundColor = "rgb(238,228,218)"; 
                 break;
             case 4: blockAt(x,y).style.backgroundColor = "rgb(242,177,121)"; 
                 break;
@@ -134,32 +152,36 @@ function clearGame() {
 
 function newGame() {
     
-    document.getElementById("endGameScreen").style.display = "none"
-    prevGameStates = []
+    document.getElementById("endGameScreen").style.display = "none";
+    prevGameStates = [];
 
-    clearGame()
-    newBlock()
-    updateScore()
+    clearGame();
+    newBlock();
+    updateScore();
 }
 
 function evalEnd(state) {
-    dirs = ['u','d','r','l']
+    if ([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0].toString() == gameState().toString()) {
+        return false;
+    }
 
-    var retVal = true
+    dirs = ['u','d','r','l'];
+
+    var retVal = true;
 
     dirs.forEach(dir => {
         if (state.toString() != moveAlg(state , dir).toString()) { 
-            retVal = false
+            retVal = false;
         }
     })
 
-    return retVal
+    return retVal;
 }
 
 function lineShiftAlg(line) {
 
     /*
-    Returns a line with its elements ahifted to the right 
+    Returns a line with its elements shifted to the right 
     having in mind the rules of the game
     */
 
@@ -265,41 +287,45 @@ function moveAlg(state,dir) {
 }
 
 function move(dir) {
-    state = gameState()
-    newState = moveAlg(state, dir)
+    state = gameState();
+    newState = moveAlg(state, dir);
 
+    if ([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0].toString() == gameState().toString()) {
+        newGame();
+        return;
+    }
     if (state.toString() != newState.toString()) {
-        prevGameStates.push(state)
-        loadGame(newState)
-        newBlock()
-        updateScore()
-
+        prevGameStates.push(state);
+        loadGame(newState);
+        newBlock();
+        updateScore();
     }
 
     if (evalEnd(newState)) {
-        document.getElementById("endGameScreen").style.display = "block"
+        document.getElementById("endGameScreen").style.display = "block";
     }
 }
 
 document.addEventListener('keydown', (event) => {
     switch (event.key) {
-        case "ArrowLeft":{
+        case "ArrowLeft": {
             move('l')
             break;
         }
-        case "ArrowDown":{
+        case "ArrowDown": {
             move('d')
             break;
         }
-        case "ArrowRight":{
+        case "ArrowRight": {
             move('r')
             break;
         }
-        case "ArrowUp":{
+        case "ArrowUp": {
             move('u')
             break;
         }
-        case "r":{
+        case "R":
+        case "r": {
             newGame()
             break;
         }
